@@ -146,11 +146,20 @@ describe LinkedList::List do
   end
 
   describe '#reverse!' do
+    it 'returns self when list is empty' do
+      assert_equal list, list.reverse!
+    end
+
     it 'reverses order of nodes' do
       list.push(node_1)
       list.push(node_2)
       list.reverse!
       assert_equal [node_2, node_1], [list.first, list.last]
+    end
+
+    it 'returns same object' do
+      list.push(node_1)
+      assert_equal list, list.reverse!
     end
   end
 end

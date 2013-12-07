@@ -108,6 +108,7 @@ module LinkedList
         prev_node = curr_node
       end
       @first = prev_node
+      self
     end
   end
 end
