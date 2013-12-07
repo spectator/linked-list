@@ -1,4 +1,4 @@
-# Linked::List
+# LinkedList
 
 TODO: Write a gem description
 
