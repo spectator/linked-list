@@ -9,6 +9,9 @@ module LinkedList
 
     # Conversion function, see +Conversions.Node+.
     #
+    # == Returns:
+    # self
+    #
     def to_node
       self
     end
