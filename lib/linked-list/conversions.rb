@@ -9,12 +9,12 @@ module LinkedList
     # == Returns:
     # New +Node+ object.
     #
-    def Node(*args)
-      case args.first
-      when ->(arg) { arg.respond_to?(:to_node) }
-        args.first.to_node
+    def Node(arg)
+      case arg
+      when ->(_arg) { _arg.respond_to?(:to_node) }
+        arg.to_node
       else
-        Node.new(args.first)
+        Node.new(arg)
       end
     end
 
@@ -28,14 +28,14 @@ module LinkedList
     # == Returns:
     # New +List+ object.
     #
-    def List(*args)
-      case args.first
-      when ->(arg) { arg.respond_to?(:to_list) }
-        args.first.to_list
-      when ->(arg) { arg.respond_to?(:to_ary) }
-        args.first.to_ary.each_with_object(List.new) { |n, l| l.push(Node(n)) }
+    def List(arg)
+      case arg
+      when ->(_arg) { _arg.respond_to?(:to_list) }
+        arg.to_list
+      when ->(_arg) { _arg.respond_to?(:to_ary) }
+        arg.to_ary.each_with_object(List.new) { |n, l| l.push(Node(n)) }
       else
-        List.new.push(Node(args.first))
+        List.new.push(Node(arg))
       end
     end
   end
