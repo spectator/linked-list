@@ -162,4 +162,10 @@ describe LinkedList::List do
       assert_equal list, list.reverse!
     end
   end
+
+  describe 'conversion' do
+    it '#to_linked_list returns self' do
+      assert_equal list, list.to_linked_list
+    end
+  end
 end

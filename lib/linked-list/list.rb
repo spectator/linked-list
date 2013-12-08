@@ -110,5 +110,14 @@ module LinkedList
       @head = prev_node
       self
     end
+
+    # Conversion function, see +Conversions.List+.
+    #
+    # == Returns:
+    # self
+    #
+    def to_linked_list
+      self
+    end
   end
 end
