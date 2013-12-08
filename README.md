@@ -80,6 +80,14 @@ Please see `LinkedList::List`, `LinkedList::Node`, and
 * Insert / delete in the middle
 * More readable `inspect`
 
+## Tests
+
+Run test with
+
+```shell
+$ rake
+```
+
 ## Contributing
 
 1. Fork it
