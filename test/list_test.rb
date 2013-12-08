@@ -159,7 +159,7 @@ describe LinkedList::List do
       list.push(node_1)
       list.push(node_2)
       new_list = list.reverse
-      assert_equal ['bar', 'foo'], [new_list.first, new_list.last]
+      assert_equal %w(bar foo), [new_list.first, new_list.last]
     end
   end
 
@@ -191,7 +191,7 @@ describe LinkedList::List do
       list.push(node_2)
       nodes = []
       list.each { |e| nodes << e }
-      assert_equal ['foo', 'bar'], nodes
+      assert_equal %w(foo bar), nodes
     end
   end
 
