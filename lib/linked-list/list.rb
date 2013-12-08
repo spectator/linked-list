@@ -116,7 +116,7 @@ module LinkedList
     # == Returns:
     # self
     #
-    def to_linked_list
+    def to_list
       self
     end
   end

@@ -164,8 +164,8 @@ describe LinkedList::List do
   end
 
   describe 'conversion' do
-    it '#to_linked_list returns self' do
-      assert_equal list, list.to_linked_list
+    it '#to_list returns self' do
+      assert_equal list, list.to_list
     end
   end
 end
