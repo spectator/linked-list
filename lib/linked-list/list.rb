@@ -99,6 +99,15 @@ module LinkedList
       head.data
     end
 
+    # Reverse list of nodes and returns new instance of the list.
+    #
+    # == Returns:
+    # New +List+ in reverse order.
+    #
+    def reverse
+      List(to_a).reverse!
+    end
+
     # Reverses list of nodes in place.
     #
     # == Returns:
@@ -131,6 +140,13 @@ module LinkedList
       return to_enum(__callee__) unless block_given?
       __each { |e| yield(e.data) }
     end
+
+    # Converts list to array.
+    #
+    def to_a
+      each.to_a
+    end
+    alias_method :to_ary, :to_a
 
     # Conversion function, see +Conversions.List+.
     #

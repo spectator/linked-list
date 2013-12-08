@@ -145,6 +145,24 @@ describe LinkedList::List do
     end
   end
 
+  describe '#reverse' do
+    it 'returns new empty list when receiver list is empty' do
+      refute_equal list, list.reverse
+    end
+
+    it 'returns new list in reverse order' do
+      list.push(node_1)
+      refute_equal list.reverse, list.reverse!
+    end
+
+    it 'reverses order of nodes' do
+      list.push(node_1)
+      list.push(node_2)
+      new_list = list.reverse
+      assert_equal ['bar', 'foo'], [new_list.first, new_list.last]
+    end
+  end
+
   describe '#reverse!' do
     it 'returns self when list is empty' do
       assert_equal list, list.reverse!
