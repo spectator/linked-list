@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Linked::List::VERSION
   spec.authors       = ['Yury Velikanau']
   spec.email         = ['yury.velikanau@gmail.com']
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Ruby implementation of Linked List, following some Ruby idioms.}
+  spec.summary       = %q{Ruby implementation of Linked List, following some Ruby idioms.}
   spec.homepage      = 'https://github.com/spectator/linked-list'
   spec.license       = 'MIT'
 
