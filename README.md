@@ -1,5 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/spectator/linked-list.png)](https://codeclimate.com/github/spectator/linked-list)
 [![Build Status](https://secure.travis-ci.org/spectator/linked-list.png?branch=master)](http://travis-ci.org/spectator/linked-list)
+[![Gem Version](https://badge.fury.io/rb/linked-list.png)](http://badge.fury.io/rb/linked-list)
 
 # LinkedList
 
