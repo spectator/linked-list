@@ -9,39 +9,47 @@ Ruby implementation of Linked List, following some Ruby idioms.
 
 Add this line to your application's Gemfile:
 
-    gem 'linked-list'
+```ruby
+gem 'linked-list'
+```
 
 And then execute:
 
-    $ bundle
+```shell
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install linked-list
+```shell
+$ gem install linked-list
+```
 
 ## Usage
 
-    object = Object.new # could be anything
-    list = LinkedList::List.new
+```ruby
+object = Object.new # could be anything
+list = LinkedList::List.new
 
-    list.push(object)
-    list << object # same as `push`
+list.push(object)
+list << object # same as `push`
 
-    list.unshift(object)
+list.unshift(object)
 
-    list.pop
-    list.shift
+list.pop
+list.shift
 
-    list.reverse
-    list.reverse!
+list.reverse
+list.reverse!
 
-    list.each      # Enumerator object
-    list.each { |e| puts e }
+list.each      # Enumerator object
+list.each { |e| puts e }
 
-    list.first     # head of the list
-    list.last      # tail of the list
+list.first     # head of the list
+list.last      # tail of the list
 
-    list.to_a
+list.to_a
+```
 
 Please see `LinkedList::List` and `LinkedList::Node` for details.
 
