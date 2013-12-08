@@ -2,13 +2,25 @@ module LinkedList
   class List
     include Conversions
 
-    attr_reader  :head, :tail, :length
+    attr_reader  :length
     alias_method :size, :length
 
     def initialize
       @head   = nil
       @tail   = nil
       @length = 0
+    end
+
+    # Returns the first element of the list or nil.
+    #
+    def first
+      @head && @head.data
+    end
+
+    # Returns the last element of the list or nil.
+    #
+    def last
+      @tail && @tail.data
     end
 
     # Pushes new nodes to the end of the list.

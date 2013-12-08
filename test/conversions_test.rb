@@ -21,12 +21,12 @@ describe LinkedList::Conversions do
 
     it 'returns list with nodes made from array' do
       list = LinkedList::Conversions.List([1, 2])
-      assert_equal [1, 2], [list.head.data, list.tail.data]
+      assert_equal [1, 2], [list.first, list.last]
     end
 
     it 'returns new list with one node' do
       list = LinkedList::Conversions.List('foo')
-      assert_equal 'foo', list.head.data
+      assert_equal 'foo', list.first
     end
   end
 end
