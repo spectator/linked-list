@@ -163,6 +163,20 @@ describe LinkedList::List do
     end
   end
 
+  describe '#each' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.each { |e| nodes << e }
+      assert_equal ['foo', 'bar'], nodes
+    end
+  end
+
   describe 'conversion' do
     it '#to_list returns self' do
       assert_equal list, list.to_list

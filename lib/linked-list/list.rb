@@ -120,6 +120,18 @@ module LinkedList
       self
     end
 
+    # Iterates over nodes from top to bottom passing node data to the block if
+    # given. If no block given, returns +Enumerator+.
+    #
+    # == Returns:
+    # +Enumerator+ or yields data to the block stored in every node on the
+    # list.
+    #
+    def each
+      return to_enum(__callee__) unless block_given?
+      __each { |e| yield(e.data) }
+    end
+
     # Conversion function, see +Conversions.List+.
     #
     # == Returns:
@@ -135,6 +147,14 @@ module LinkedList
       head = @head
       @head = @head.next
       head
+    end
+
+    def __each
+      next_node = @head
+      while(next_node)
+        yield next_node
+        next_node = next_node.next
+      end
     end
   end
 end
