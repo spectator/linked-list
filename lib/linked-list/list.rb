@@ -92,8 +92,7 @@ module LinkedList
     def shift
       return nil unless @head
 
-      head = @head
-      @head = @head.next
+      head = __shift
       @tail = nil unless @head
 
       @length -= 1
@@ -108,14 +107,12 @@ module LinkedList
     def reverse!
       return self unless @head
 
-      prev_node = @head
-      @head = @head.next
+      prev_node = __shift
       prev_node.next = nil
       @tail = prev_node
 
       while(@head)
-        curr_node = @head
-        @head = @head.next
+        curr_node = __shift
         curr_node.next = prev_node
         prev_node = curr_node
       end
@@ -130,6 +127,14 @@ module LinkedList
     #
     def to_list
       self
+    end
+
+    private
+
+    def __shift
+      head = @head
+      @head = @head.next
+      head
     end
   end
 end
