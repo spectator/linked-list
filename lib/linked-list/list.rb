@@ -2,12 +2,12 @@ module LinkedList
   class List
     include Conversions
 
-    attr_reader  :first, :last, :length
+    attr_reader  :head, :tail, :length
     alias_method :size, :length
 
     def initialize
-      @first  = nil
-      @last   = nil
+      @head   = nil
+      @tail   = nil
       @length = 0
     end
 
@@ -21,10 +21,10 @@ module LinkedList
     #
     def push(node)
       node = Node(node)
-      @first ||= node
+      @head ||= node
 
-      @last.next = node if @last
-      @last = node
+      @tail.next = node if @tail
+      @tail = node
 
       @length += 1
       self
@@ -41,10 +41,10 @@ module LinkedList
     #
     def unshift(node)
       node = Node(node)
-      @last ||= node
+      @tail ||= node
 
-      node.next = @first
-      @first = node
+      node.next = @head
+      @head = node
 
       @length += 1
       self
@@ -56,20 +56,20 @@ module LinkedList
     # Data stored in the node or nil.
     #
     def pop
-      return nil unless @first
+      return nil unless @head
 
-      node = @first
-      next_to_last = nil
+      node = @head
+      next_to_tail = nil
       while(node = node.next)
-        next_to_last = node unless node.next
+        next_to_tail = node unless node.next
       end
-      @first = nil unless next_to_last
+      @head = nil unless next_to_tail
 
-      last = @last
-      @last = next_to_last
+      tail = @tail
+      @tail = next_to_tail
 
       @length -= 1
-      last.data
+      tail.data
     end
 
     # Removes node from the beginning of the list.
@@ -78,14 +78,14 @@ module LinkedList
     # Data stored in the node or nil.
     #
     def shift
-      return nil unless @first
+      return nil unless @head
 
-      first = @first
-      @first = @first.next
-      @last = nil unless @first
+      head = @head
+      @head = @head.next
+      @tail = nil unless @head
 
       @length -= 1
-      first.data
+      head.data
     end
 
     # Reverses list of nodes in place.
@@ -94,20 +94,20 @@ module LinkedList
     # self in reverse order.
     #
     def reverse!
-      return self unless @first
+      return self unless @head
 
-      prev_node = @first
-      @first = @first.next
+      prev_node = @head
+      @head = @head.next
       prev_node.next = nil
-      @last = prev_node
+      @tail = prev_node
 
-      while(@first)
-        curr_node = @first
-        @first = @first.next
+      while(@head)
+        curr_node = @head
+        @head = @head.next
         curr_node.next = prev_node
         prev_node = curr_node
       end
-      @first = prev_node
+      @head = prev_node
       self
     end
   end

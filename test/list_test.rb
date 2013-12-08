@@ -6,12 +6,12 @@ describe LinkedList::List do
   let(:node_2) { create_node('bar') }
 
   describe 'instantiation' do
-    it 'assigns first to nil' do
-      assert_nil list.first
+    it 'assigns head to nil' do
+      assert_nil list.head
     end
 
-    it 'assigns last to nil' do
-      assert_nil list.last
+    it 'assigns tail to nil' do
+      assert_nil list.tail
     end
 
     it 'has zero length' do
@@ -20,20 +20,20 @@ describe LinkedList::List do
   end
 
   describe '#push' do
-    it 'last pushed node can be accessed with #last' do
+    it 'last pushed node can be accessed with #tail' do
       list.push(node_1)
-      assert_equal node_1, list.last
+      assert_equal node_1, list.tail
     end
 
-    it 'last pushed node can be accessed with #first' do
+    it 'last pushed node can be accessed with #head' do
       list.push(node_1)
-      assert_equal node_1, list.first
+      assert_equal node_1, list.head
     end
 
-    it 'maintains first pushed node as first' do
+    it 'maintains first pushed node as head' do
       list.push(node_1)
       list.push(node_2)
-      assert_equal node_1, list.first
+      assert_equal node_1, list.head
     end
 
     it 'sets reference to the next node' do
@@ -53,20 +53,20 @@ describe LinkedList::List do
   end
 
   describe '#unshift' do
-    it 'last pushed node can be accessed with #last' do
+    it 'last pushed node can be accessed with #tail' do
       list.unshift(node_1)
-      assert_equal node_1, list.last
+      assert_equal node_1, list.tail
     end
 
-    it 'last pushed node can be accessed with #first' do
+    it 'last pushed node can be accessed with #head' do
       list.unshift(node_1)
-      assert_equal node_1, list.first
+      assert_equal node_1, list.head
     end
 
-    it 'maintains first pushed node as last' do
+    it 'maintains first pushed node as tail' do
       list.unshift(node_1)
       list.unshift(node_2)
-      assert_equal node_1, list.last
+      assert_equal node_1, list.tail
     end
 
     it 'sets reference to the next node' do
@@ -96,16 +96,16 @@ describe LinkedList::List do
       assert_equal node_2.data, list.pop
     end
 
-    it 'sets #last to nil when all nodes are removed' do
+    it 'sets #tail to nil when all nodes are removed' do
       list.push(node_1)
       list.pop
-      assert_nil list.last
+      assert_nil list.tail
     end
 
-    it 'sets #first to nil when all nodes are removed' do
+    it 'sets #head to nil when all nodes are removed' do
       list.push(node_1)
       list.pop
-      assert_nil list.first
+      assert_nil list.head
     end
 
     it 'reduces list length by 1' do
@@ -126,16 +126,16 @@ describe LinkedList::List do
       assert_equal node_1.data, list.shift
     end
 
-    it 'sets #last to nil when all nodes are removed' do
+    it 'sets #tail to nil when all nodes are removed' do
       list.push(node_1)
       list.shift
-      assert_nil list.last
+      assert_nil list.tail
     end
 
-    it 'sets #first to nil when all nodes are removed' do
+    it 'sets #head to nil when all nodes are removed' do
       list.push(node_1)
       list.shift
-      assert_nil list.first
+      assert_nil list.head
     end
 
     it 'reduces list length by 1' do
@@ -154,7 +154,7 @@ describe LinkedList::List do
       list.push(node_1)
       list.push(node_2)
       list.reverse!
-      assert_equal [node_2, node_1], [list.first, list.last]
+      assert_equal [node_2, node_1], [list.head, list.tail]
     end
 
     it 'returns same object' do
