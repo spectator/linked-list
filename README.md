@@ -56,7 +56,6 @@ Please see `LinkedList::List` and `LinkedList::Node` for details.
 ## TODO
 
 * Insert / delete in the middle
-* Contatenation of multiple linked lists
 * More readable `inspect`
 
 ## Contributing
