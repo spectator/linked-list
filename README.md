@@ -49,6 +49,9 @@ list.each { |e| puts e }
 list.first     # head of the list
 list.last      # tail of the list
 
+list.length
+list.size      # same as `length`
+
 list.to_a
 ```
 
