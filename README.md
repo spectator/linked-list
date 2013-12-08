@@ -55,7 +55,25 @@ list.size      # same as `length`
 list.to_a
 ```
 
-Please see `LinkedList::List` and `LinkedList::Node` for details.
+Another way to instantiate `List` or `Node` is to use conversion functions.
+First, include `LinkedList::Conversions` module to your class
+
+```ruby
+class Foo
+  include LinkedList::Conversions
+end
+```
+
+Now anywhere in your class you can use the following methods
+
+```ruby
+Node(object)           # will return new `Node` object
+List(object)           # will return new `List` object with one `Node` object
+List([object, object]) # will return new `List` object with two `Node` objects
+```
+
+Please see `LinkedList::List`, `LinkedList::Node`, and
+`LinkedList::Conversions` for details.
 
 ## TODO
 
