@@ -195,6 +195,21 @@ describe LinkedList::List do
     end
   end
 
+  describe '#inspect' do
+    it 'includes class name' do
+      assert_match(/LinkedList::List/, list.inspect)
+    end
+
+    it 'includes object id' do
+      assert_match(/#{list.object_id.to_s(16)}/, list.inspect)
+    end
+
+    it 'includes node values' do
+      list.push(node_1)
+      assert_match(/foo/, list.inspect)
+    end
+  end
+
   describe 'conversion' do
     it '#to_list returns self' do
       assert_equal list, list.to_list

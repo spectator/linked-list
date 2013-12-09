@@ -148,6 +148,10 @@ module LinkedList
     end
     alias_method :to_ary, :to_a
 
+    def inspect
+      sprintf('#<%s:%#x %s>', self.class, self.__id__, to_a.inspect)
+    end
+
     # Conversion function, see +Conversions.List+.
     #
     # == Returns:

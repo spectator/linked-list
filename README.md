@@ -78,7 +78,6 @@ Please see `LinkedList::List`, `LinkedList::Node`, and
 ## TODO
 
 * Insert / delete in the middle
-* More readable `inspect`
 
 ## Tests
 
