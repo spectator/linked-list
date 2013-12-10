@@ -1,3 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
+
 require 'linked-list'
 
 gem 'minitest'
