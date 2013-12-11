@@ -172,10 +172,10 @@ module LinkedList
     end
 
     def __each
-      next_node = @head
-      while(next_node)
-        yield next_node
-        next_node = next_node.next
+      curr_node = @head
+      while(curr_node)
+        yield curr_node
+        curr_node = curr_node.next
       end
     end
   end
