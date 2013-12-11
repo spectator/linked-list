@@ -29,7 +29,7 @@ module LinkedList
     # node:: Any object, including +Node+ objects.
     #
     # == Returns:
-    # self of +List+ object.
+    # +self+ of +List+ object.
     #
     def push(node)
       node = Node(node)
@@ -49,7 +49,7 @@ module LinkedList
     # node:: Any object, including +Node+ objects.
     #
     # == Returns:
-    # self of +List+ object.
+    # +self+ of +List+ object.
     #
     def unshift(node)
       node = Node(node)
@@ -111,7 +111,7 @@ module LinkedList
     # Reverses list of nodes in place.
     #
     # == Returns:
-    # self in reverse order.
+    # +self+ in reverse order.
     #
     def reverse!
       return self unless @head
@@ -155,7 +155,7 @@ module LinkedList
     # Conversion function, see +Conversions.List+.
     #
     # == Returns:
-    # self
+    # +self+
     #
     def to_list
       self
