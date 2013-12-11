@@ -42,6 +42,12 @@ describe LinkedList::List do
       assert_equal node_1.next, node_2
     end
 
+    it 'sets reference to the prev node' do
+      list.push(node_1)
+      list.push(node_2)
+      assert_equal node_2.prev, node_1
+    end
+
     it 'increases list length by 1' do
       list.push(node_1)
       assert_equal 1, list.length
@@ -73,6 +79,12 @@ describe LinkedList::List do
       list.unshift(node_1)
       list.unshift(node_2)
       assert_equal node_2.next, node_1
+    end
+
+    it 'sets reference to the prev node' do
+      list.unshift(node_1)
+      list.unshift(node_2)
+      assert_equal node_1.prev, node_2
     end
 
     it 'increases list length by 1' do
