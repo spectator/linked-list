@@ -70,15 +70,16 @@ module LinkedList
     def pop
       return nil unless @head
 
-      node = @head
       next_to_tail = nil
-      while(node = node.next)
-        next_to_tail = node unless node.next
-      end
-      @head = nil unless next_to_tail
+      __each { |node| next_to_tail = node if @tail == node.next }
 
-      tail = @tail
-      @tail = next_to_tail
+      tail, @tail = @tail, next_to_tail
+
+      if next_to_tail
+        @tail.next = nil
+      else
+        @head = nil
+      end
 
       @length -= 1
       tail.data
