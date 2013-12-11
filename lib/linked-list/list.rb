@@ -139,7 +139,7 @@ module LinkedList
     #
     def each
       return to_enum(__callee__) unless block_given?
-      __each { |e| yield(e.data) }
+      __each { |node| yield(node.data) }
     end
 
     # Converts list to array.
