@@ -62,7 +62,7 @@ module LinkedList
       self
     end
 
-    # Removes node from the end of the list.
+    # Removes data from the end of the list.
     #
     # == Returns:
     # Data stored in the node or nil.
@@ -84,7 +84,7 @@ module LinkedList
       tail.data
     end
 
-    # Removes node from the beginning of the list.
+    # Removes data from the beginning of the list.
     #
     # == Returns:
     # Data stored in the node or nil.
