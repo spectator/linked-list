@@ -145,6 +145,34 @@ describe LinkedList::List do
     end
   end
 
+  describe '#delete' do
+    it 'returns nil if list is empty' do
+      assert_nil list.delete('x')
+    end
+
+    it 'deletes value in all nodes' do
+      list.push('foo')
+      list.push('foo')
+      list.push('bar')
+      list.push('foo')
+      list.delete('foo')
+      assert_equal ['bar'], list.to_a
+    end
+
+    it 'returns deleted value' do
+      list.push('foo')
+      assert_equal 'foo', list.delete('foo')
+    end
+
+    it 'decreases length of list' do
+      list.push('foo')
+      list.push('bar')
+      list.push('foo')
+      list.delete('foo')
+      assert_equal 1, list.length
+    end
+  end
+
   describe '#reverse' do
     it 'returns new empty list when receiver list is empty' do
       refute_equal list, list.reverse

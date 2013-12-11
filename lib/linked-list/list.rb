@@ -100,6 +100,14 @@ module LinkedList
       head.data
     end
 
+    # Removes data specified in all matching nodes.
+    #
+    # == Returns:
+    # Deleted data or nil.
+    #
+    def delete(node)
+    end
+
     # Reverse list of nodes and returns new instance of the list.
     #
     # == Returns:
