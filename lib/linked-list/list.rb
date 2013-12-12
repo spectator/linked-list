@@ -35,7 +35,11 @@ module LinkedList
       node = Node(node)
       @head ||= node
 
-      @tail.next = node if @tail
+      if @tail
+        @tail.next = node
+        node.prev = @tail
+      end
+
       @tail = node
 
       @length += 1
@@ -56,6 +60,7 @@ module LinkedList
       @tail ||= node
 
       node.next = @head
+      @head.prev = node if @head
       @head = node
 
       @length += 1
@@ -70,16 +75,8 @@ module LinkedList
     def pop
       return nil unless @head
 
-      next_to_tail = nil
-      __each { |node| next_to_tail = node if @tail == node.next }
-
-      tail, @tail = @tail, next_to_tail
-
-      if next_to_tail
-        @tail.next = nil
-      else
-        @head = nil
-      end
+      tail = __pop
+      @head = nil unless @tail
 
       @length -= 1
       tail.data
@@ -117,16 +114,11 @@ module LinkedList
     def reverse!
       return self unless @head
 
-      prev_node = __shift
-      prev_node.next = nil
-      @tail = prev_node
-
-      while(@head)
-        curr_node = __shift
-        curr_node.next = prev_node
-        prev_node = curr_node
+      __each do |curr_node|
+        curr_node.prev, curr_node.next = curr_node.next, curr_node.prev
       end
-      @head = prev_node
+      @head, @tail = @tail, @head
+
       self
     end
 
@@ -169,6 +161,13 @@ module LinkedList
       @head = @head.next
       head.next = nil
       head
+    end
+
+    def __pop
+      tail = @tail
+      @tail = @tail.prev
+      @tail.prev = nil if @tail
+      tail
     end
 
     def __each

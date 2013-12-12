@@ -11,6 +11,10 @@ describe LinkedList::Node do
     it 'assigns nil to next' do
       assert_nil node.next
     end
+
+    it 'assigns nil to prev' do
+      assert_nil node.prev
+    end
   end
 
   describe 'accessors' do
@@ -22,6 +26,11 @@ describe LinkedList::Node do
     it '#next' do
       node.next = 'bar'
       assert_equal 'bar', node.next
+    end
+
+    it '#prev' do
+      node.prev = 'xyz'
+      assert_equal 'xyz', node.prev
     end
   end
 
