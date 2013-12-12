@@ -5,7 +5,7 @@
 
 # LinkedList
 
-Ruby implementation of Linked List, following some Ruby idioms.
+Ruby implementation of Doubly Linked List, following some Ruby idioms.
 
 ## Installation
 
