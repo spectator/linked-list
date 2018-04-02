@@ -125,6 +125,13 @@ describe LinkedList::List do
       list.pop
       assert_equal 0, list.length
     end
+
+    it 'maintains list when multiple nodes are removed' do
+      list.push(node_1)
+      list.push(node_2)
+      list.pop
+      assert_equal [node_1.data], list.to_a
+    end
   end
 
   describe '#shift' do

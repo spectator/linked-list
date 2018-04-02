@@ -166,7 +166,7 @@ module LinkedList
     def __pop
       tail = @tail
       @tail = @tail.prev
-      @tail.prev = nil if @tail
+      @tail.next = nil if @tail
       tail
     end
 
