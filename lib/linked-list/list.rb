@@ -4,7 +4,7 @@ module LinkedList
   class List
     include Conversions
 
-    attr_reader :length
+    attr_accessor :length, :head, :tail
     alias_method :size, :length
 
     def initialize
@@ -34,7 +34,7 @@ module LinkedList
     # +self+ of +List+ object.
     #
     def push(node)
-      node = Node(node)
+      node = Node(node, self)
       @head ||= node
 
       if @tail
@@ -58,7 +58,7 @@ module LinkedList
     # +self+ of +List+ object.
     #
     def unshift(node)
-      node = Node(node)
+      node = Node(node, self)
       @tail ||= node
 
       node.next = @head
@@ -77,17 +77,7 @@ module LinkedList
     def insert_after(to_add, val = nil, &block)
       found_node = each_node.find(&__to_matcher(val, &block))
       return if found_node.blank?
-      Node(to_add).tap do |new_node|
-        new_node.prev = found_node
-        new_node.next = found_node.next
-        if found_node.next
-          found_node.next.prev = new_node
-        else
-          @tail = new_node
-        end
-        found_node.next = new_node
-        @length += 1
-      end.data
+      found_node.insert_after(to_add)
     end
 
     # Inserts before first matched node.data from the the list by passed block or value.
@@ -98,17 +88,7 @@ module LinkedList
     def insert_before(to_add, val = nil, &block)
       found_node = each_node.find(&__to_matcher(val, &block))
       return if found_node.blank?
-      Node(to_add).tap do |new_node|
-        new_node.next = found_node
-        new_node.prev = found_node.prev
-        if found_node.prev
-          found_node.prev.next = new_node
-        else
-          @head = new_node
-        end
-        found_node.prev = new_node
-        @length += 1
-      end.data
+      found_node.insert_before(to_add)
     end
 
     # Removes first matched node.data from the the list by passed block or value.
@@ -119,7 +99,7 @@ module LinkedList
     def delete(val = nil, &block)
       each_node.find(&__to_matcher(val, &block)).tap do |node_to_delete|
         return if node_to_delete.blank?
-        __unlink(node_to_delete)
+        node_to_delete.unlink
       end.data
     end
 
@@ -131,7 +111,7 @@ module LinkedList
     def delete_all(val = nil, &block)
       each_node.select(&__to_matcher(val, &block)).each do |node_to_delete|
         next if node_to_delete.blank?
-        __unlink(node_to_delete)
+        node_to_delete.unlink
       end.map(&:data)
     end
 
@@ -233,19 +213,6 @@ module LinkedList
       raise ArgumentError, 'either value or block should be passed' if val && block_given?
       block = ->(e) { e == val } unless block_given?
       -> (node) { block.call(node.data) }
-    end
-
-    def __unlink(node)
-      if node.prev.blank?
-        node.next.prev = nil if node.next
-        @head = node.next
-      elsif node.next.blank?
-        node.prev.next = nil if node.prev
-        @tail = node.prev
-      else
-        node.prev.next, node.next.prev = node.next, node.prev
-      end
-      @length -= 1
     end
 
     def __shift

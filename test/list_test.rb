@@ -348,7 +348,6 @@ describe LinkedList::List do
           assert_equal [0, 2], list.to_a
         end
 
-
         it 'deletes value from tail' do
           list.delete { |d| d == 2 }
           assert_equal [0, 1], list.to_a
