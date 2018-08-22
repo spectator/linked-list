@@ -306,12 +306,14 @@ describe LinkedList::List do
       end
 
       it 'deletes value in first matching node' do
+        calls_count = 0
         list.push('foo')
         list.push('foo')
         list.push('bar')
         list.push('foo')
-        list.delete { |d| d == 'foo' }
+        list.delete { |d| calls_count += 1;d == 'foo' }
         assert_equal ['foo', 'bar', 'foo'], list.to_a
+        assert_equal 1, calls_count
       end
 
       it 'returns deleted value' do
