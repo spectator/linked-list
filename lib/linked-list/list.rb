@@ -2,10 +2,9 @@
 
 module LinkedList
   class List
-    include Enumerable
     include Conversions
 
-    attr_reader  :length
+    attr_reader :length
     alias_method :size, :length
 
     def initialize
@@ -68,6 +67,30 @@ module LinkedList
 
       @length += 1
       self
+    end
+
+    # Removes data from the the list by passed block or value.
+    #
+    # == Returns:
+    # Deleted node
+    #
+    def delete(val = nil, &block)
+      each_node.find(&__to_matcher(val, &block)).tap do |node_to_delete|
+        return if node_to_delete.blank?
+        __unlink(node_to_delete)
+      end.data
+    end
+
+    # Removes data from the the list by passed block or value.
+    #
+    # == Returns:
+    # Deleted node
+    #
+    def delete_all(val = nil, &block)
+      each_node.select(&__to_matcher(val, &block)).each do |node_to_delete|
+        next if node_to_delete.blank?
+        __unlink(node_to_delete)
+      end.map(&:data)
     end
 
     # Removes data from the end of the list.
@@ -137,6 +160,11 @@ module LinkedList
       __each { |node| yield(node.data) }
     end
 
+    def each_node
+      return to_enum(__callee__) unless block_given?
+      __each { |node| yield(node) }
+    end
+
     # Converts list to array.
     #
     def to_a
@@ -158,6 +186,25 @@ module LinkedList
     end
 
     private
+
+    def __to_matcher(val = nil, &block)
+      raise ArgumentError, 'either value or block should be passed' if !val.nil? && block_given?
+      block = ->(e) { e == val } unless block_given?
+      -> (node) { block.call(node.data) }
+    end
+
+    def __unlink(node)
+      if node.prev.blank?
+        node.next.prev = nil if node.next
+        @head = node.next
+      elsif node.next.blank?
+        node.prev.next = nil if node.prev
+        @tail = node.prev
+      else
+        node.prev, node.next = node.next, node.prev
+      end
+      @length -= 1
+    end
 
     def __shift
       head = @head

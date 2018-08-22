@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Linked::List::VERSION
   spec.authors       = ['Yury Velikanau']
   spec.email         = ['yury.velikanau@gmail.com']
-  spec.description   = %q{Ruby implementation of Doubly Linked List, following some Ruby idioms.}
-  spec.summary       = %q{Ruby implementation of Doubly Linked List, following some Ruby idioms.}
+  spec.description   = %q(Ruby implementation of Doubly Linked List, following some Ruby idioms.)
+  spec.summary       = %q(Ruby implementation of Doubly Linked List, following some Ruby idioms.)
   spec.homepage      = 'https://github.com/spectator/linked-list'
   spec.license       = 'MIT'
 
@@ -18,8 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'bundler',  '>= 1.3', '<= 2.0'
-  spec.add_development_dependency 'minitest', '>= 5.0', '<= 6.0'
+  spec.add_development_dependency 'bundler', '>= 1.3', '<= 2.0'
   spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'm', '~> 1.5.0'
+  spec.add_development_dependency 'minitest', '>= 5.0', '<= 6.0'
+  spec.add_development_dependency 'rake'
 end
