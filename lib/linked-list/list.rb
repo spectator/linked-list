@@ -201,7 +201,7 @@ module LinkedList
         node.prev.next = nil if node.prev
         @tail = node.prev
       else
-        node.prev, node.next = node.next, node.prev
+        node.prev.next, node.next.prev = node.next, node.prev
       end
       @length -= 1
     end

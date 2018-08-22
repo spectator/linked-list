@@ -170,6 +170,32 @@ describe LinkedList::List do
         assert_equal 2, list.length
         assert_equal ['bar', 'foo'], list.to_a
       end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'deletes value from head' do
+          list.delete { |d| d == 0 }
+          assert_equal [1, 2], list.to_a
+          assert_equal 1, list.first
+        end
+
+        it 'deletes value from middle' do
+          list.delete { |d| d == 1 }
+          assert_equal [0, 2], list.to_a
+        end
+
+
+        it 'deletes value from tail' do
+          list.delete { |d| d == 2 }
+          assert_equal [0, 1], list.to_a
+          assert_equal 1, list.last
+        end
+      end
     end
 
     describe 'by data equality' do
@@ -198,6 +224,32 @@ describe LinkedList::List do
         list.delete('foo')
         assert_equal 2, list.length
         assert_equal ['bar', 'foo'], list.to_a
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'deletes value from head' do
+          list.delete(0)
+          assert_equal [1, 2], list.to_a
+          assert_equal 1, list.first
+        end
+
+        it 'deletes value from middle' do
+          list.delete(1)
+          assert_equal [0, 2], list.to_a
+        end
+
+
+        it 'deletes value from tail' do
+          list.delete(2)
+          assert_equal [0, 1], list.to_a
+          assert_equal 1, list.last
+        end
       end
     end
   end
