@@ -69,7 +69,7 @@ module LinkedList
       self
     end
 
-    # Removes data from the the list by passed block or value.
+    # Removes first matched node.data from the the list by passed block or value.
     #
     # == Returns:
     # Deleted node
@@ -81,10 +81,10 @@ module LinkedList
       end.data
     end
 
-    # Removes data from the the list by passed block or value.
+    # Removes all matched data.data from the the list by passed block or value.
     #
     # == Returns:
-    # Deleted node
+    # Array of deleted nodes
     #
     def delete_all(val = nil, &block)
       each_node.select(&__to_matcher(val, &block)).each do |node_to_delete|
