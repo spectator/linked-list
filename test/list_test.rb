@@ -311,9 +311,9 @@ describe LinkedList::List do
         list.push('foo')
         list.push('bar')
         list.push('foo')
-        list.delete { |d| calls_count += 1;d == 'foo' }
-        assert_equal ['foo', 'bar', 'foo'], list.to_a
-        assert_equal 1, calls_count
+        list.delete { |d| calls_count += 1;d == 'bar' }
+        assert_equal ['foo', 'foo', 'foo'], list.to_a
+        assert_equal 3, calls_count
       end
 
       it 'returns deleted value' do
