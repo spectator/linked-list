@@ -134,6 +134,84 @@ describe LinkedList::List do
     end
   end
 
+  describe '#insert_after' do
+    it 'raises error if block and value are passed' do
+      err = assert_raises ArgumentError do
+        assert_nil list.insert_after(1, 'x') { |d| d == 'x' }
+      end
+      assert_equal err.message, 'either value or block should be passed'
+    end
+
+    describe 'by block' do
+      it 'does not add value if insert after not found' do
+        list.push('foo')
+        assert_nil list.insert_after(1) { |d| d == 'foo1' }
+        assert_equal ['foo'], list.to_a
+      end
+
+      it 'inserts value after first matching node by block' do
+        list.push('foo')
+        list.push('bar')
+        assert_equal 1, list.insert_after(1) { |d| d == 'foo' }
+        assert_equal ['foo', 1, 'bar'], list.to_a
+        assert_equal 3, list.length
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'inserts_after in the middle' do
+          list.insert_after('foo') { |d| d == 0 }
+          assert_equal [0, 'foo', 1, 2], list.to_a
+        end
+
+        it 'insets_after the tail' do
+          list.insert_after('foo') { |d| d == 2 }
+          assert_equal [0, 1, 2, 'foo'], list.to_a
+          assert_equal 'foo', list.last
+        end
+      end
+    end
+
+    describe 'by value' do
+      it 'does not add value if insert after not found' do
+        list.push('foo')
+        assert_nil list.insert_after(1, 'foo1')
+        assert_equal ['foo'], list.to_a
+      end
+
+      it 'inserts value after first matching node by block' do
+        list.push('foo')
+        list.push('bar')
+        assert_equal 1, list.insert_after(1, 'foo')
+        assert_equal ['foo', 1, 'bar'], list.to_a
+        assert_equal 3, list.length
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'inserts_after in the middle' do
+          list.insert_after('foo', 0)
+          assert_equal [0, 'foo', 1, 2], list.to_a
+        end
+
+        it 'insets_after the tail' do
+          list.insert_after('foo', 2)
+          assert_equal [0, 1, 2, 'foo'], list.to_a
+          assert_equal 'foo', list.last
+        end
+      end
+    end
+  end
 
   describe '#delete' do
     it 'raises error if block and value are passed' do
