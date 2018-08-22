@@ -188,7 +188,7 @@ module LinkedList
     private
 
     def __to_matcher(val = nil, &block)
-      raise ArgumentError, 'either value or block should be passed' if !val.nil? && block_given?
+      raise ArgumentError, 'either value or block should be passed' if val && block_given?
       block = ->(e) { e == val } unless block_given?
       -> (node) { block.call(node.data) }
     end
