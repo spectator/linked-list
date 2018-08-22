@@ -200,6 +200,18 @@ describe LinkedList::List do
     end
   end
 
+  describe 'Enumerable #find' do
+    it 'includes Enumerable module' do
+      assert_equal list.is_a?(Enumerable), true
+    end
+
+    it 'returns found instance' do
+      list.push(node_1)
+      list.push(node_2)
+      assert_equal list.find { |str| str.include?('ar') }, 'bar'
+    end
+  end
+
   describe '#each' do
     it 'returns enumerator if no block given' do
       assert_instance_of Enumerator, list.each

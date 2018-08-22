@@ -2,6 +2,7 @@
 
 module LinkedList
   class List
+    include Enumerable
     include Conversions
 
     attr_reader  :length
