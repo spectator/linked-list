@@ -160,6 +160,12 @@ module LinkedList
       __each { |node| yield(node.data) }
     end
 
+    # Iterates over nodes from top to bottom passing node(LinkedList::Node instance)
+    # to the block if given. If no block given, returns +Enumerator+.
+    #
+    # == Returns:
+    # +Enumerator+ or yields list nodes to the block
+    #
     def each_node
       return to_enum(__callee__) unless block_given?
       __each { |node| yield(node) }
