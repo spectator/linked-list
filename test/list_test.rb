@@ -213,6 +213,85 @@ describe LinkedList::List do
     end
   end
 
+  describe '#insert_before' do
+    it 'raises error if block and value are passed' do
+      err = assert_raises ArgumentError do
+        assert_nil list.insert_before(1, 'x') { |d| d == 'x' }
+      end
+      assert_equal err.message, 'either value or block should be passed'
+    end
+
+    describe 'by block' do
+      it 'does not add value if insert before not found' do
+        list.push('foo')
+        assert_nil list.insert_before(1) { |d| d == 'foo1' }
+        assert_equal ['foo'], list.to_a
+      end
+
+      it 'inserts value before first matching node by block' do
+        list.push('foo')
+        list.push('bar')
+        assert_equal 1, list.insert_before(1) { |d| d == 'foo' }
+        assert_equal [1, 'foo', 'bar'], list.to_a
+        assert_equal 3, list.length
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'inserts_before head' do
+          list.insert_before('foo') { |d| d == 0 }
+          assert_equal ['foo', 0, 1, 2], list.to_a
+          assert_equal 'foo', list.first
+        end
+
+        it 'insets_before in the middle' do
+          list.insert_before('foo') { |d| d == 2 }
+          assert_equal [0, 1, 'foo', 2], list.to_a
+        end
+      end
+    end
+
+    describe 'by value' do
+      it 'does not add value if insert before not found' do
+        list.push('foo')
+        assert_nil list.insert_before(1, 'foo1')
+        assert_equal ['foo'], list.to_a
+      end
+
+      it 'inserts value before first matching node by block' do
+        list.push('foo')
+        list.push('bar')
+        assert_equal 1, list.insert_before(1, 'foo')
+        assert_equal [1, 'foo', 'bar'], list.to_a
+        assert_equal 3, list.length
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'inserts_before head' do
+          list.insert_before('foo', 0)
+          assert_equal ['foo', 0, 1, 2], list.to_a
+          assert_equal 'foo', list.first
+        end
+
+        it 'insets_before in the middle' do
+          list.insert_before('foo', 2)
+          assert_equal [0, 1, 'foo', 2], list.to_a
+        end
+      end
+    end
+  end
+
   describe '#delete' do
     it 'raises error if block and value are passed' do
       err = assert_raises ArgumentError do

@@ -90,6 +90,27 @@ module LinkedList
       end.data
     end
 
+    # Inserts before first matched node.data from the the list by passed block or value.
+    #
+    # == Returns:
+    # Inserted node
+    #
+    def insert_before(to_add, val = nil, &block)
+      found_node = each_node.find(&__to_matcher(val, &block))
+      return if found_node.blank?
+      Node(to_add).tap do |new_node|
+        new_node.next = found_node
+        new_node.prev = found_node.prev
+        if found_node.prev
+          found_node.prev.next = new_node
+        else
+          @head = new_node
+        end
+        found_node.prev = new_node
+        @length += 1
+      end.data
+    end
+
     # Removes first matched node.data from the the list by passed block or value.
     #
     # == Returns:
