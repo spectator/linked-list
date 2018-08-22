@@ -187,6 +187,24 @@ module LinkedList
       __each { |node| yield(node) }
     end
 
+
+        # Iterates over nodes from top to bottom passing node data to the block if
+    # given. If no block given, returns +Enumerator+.
+    #
+    # == Returns:
+    # +Enumerator+ or yields data to the block stored in every node on the
+    # list.
+    #
+    def reverse_each
+      return to_enum(__callee__) unless block_given?
+      __reverse_each { |node| yield(node.data) }
+    end
+
+    def reverse_each_node
+      return to_enum(__callee__) unless block_given?
+      __reverse_each { |node| yield(node) }
+    end
+
     # Converts list to array.
     #
     def to_a
@@ -227,6 +245,14 @@ module LinkedList
       @tail = @tail.prev
       @tail.next = nil if @tail
       tail
+    end
+
+    def __reverse_each
+      curr_node = @tail
+      while(curr_node)
+        yield curr_node
+        curr_node = curr_node.prev
+      end
     end
 
     def __each

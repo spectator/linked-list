@@ -559,6 +559,48 @@ describe LinkedList::List do
     end
   end
 
+  describe '#each_node' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.each_node { |e| nodes << e }
+      assert_equal %w(foo bar), nodes.map(&:data)
+    end
+  end
+
+  describe '#reverse_each' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.reverse_each { |e| nodes << e }
+      assert_equal %w(bar foo), nodes
+    end
+  end
+
+  describe '#reverse_each_node' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.reverse_each_node { |e| nodes << e }
+      assert_equal %w(bar foo), nodes.map(&:data)
+    end
+  end
+
   describe '#inspect' do
     it 'includes class name' do
       assert_match(/LinkedList::List/, list.inspect)
