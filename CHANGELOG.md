@@ -2,7 +2,7 @@
 
 ## Changed
 
-- Fixed bug when `@tail.prev` was mistekenly set to `nil` instead of `@tail.next` when popping elements off the list (Sonna in [#1][pr1])
+- Fixed bug when `@tail.prev` was mistekenly set to `nil` instead of `@tail.next` when popping elements off the list (Sonna in [#1](https://github.com/spectator/linked-list/pull/1))
 
 [Compare v0.0.9...v0.0.10](https://github.com/spectator/linked-list/compare/v0.0.9...v0.0.10)
 
