@@ -546,6 +546,21 @@ describe LinkedList::List do
     end
   end
 
+  describe '#each_node' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each_node
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.each_node { |e| nodes << e }
+      assert_equal %w(foo bar), nodes.map(&:data)
+      assert_equal true, nodes.all? { |n| n.is_a?(LinkedList::Node) }
+    end
+  end
+
   describe '#each' do
     it 'returns enumerator if no block given' do
       assert_instance_of Enumerator, list.each
