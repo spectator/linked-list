@@ -1,6 +1,12 @@
+# 0.0.11 / 2018-04-02
+
+## Added
+
+- Added `delete` and `delete_all` methods (mpospelov in [#2](https://github.com/spectator/linked-list/pull/2))
+
 # 0.0.10 / 2018-04-02
 
-## Changed
+## Fixed
 
 - Fixed bug when `@tail.prev` was mistekenly set to `nil` instead of `@tail.next` when popping elements off the list (Sonna in [#1](https://github.com/spectator/linked-list/pull/1))
 
