@@ -134,6 +134,193 @@ describe LinkedList::List do
     end
   end
 
+
+  describe '#delete' do
+    it 'raises error if block and value are passed' do
+      err = assert_raises ArgumentError do
+        assert_nil list.delete('x') { |d| d == 'x' }
+      end
+      assert_equal err.message, 'either value or block should be passed'
+    end
+
+    describe 'by block' do
+      it 'returns nil if list is empty' do
+        assert_nil list.delete { |d| d == 'x' }
+      end
+
+      it 'deletes value in first matching node' do
+        list.push('foo')
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete { |d| d == 'foo' }
+        assert_equal ['foo', 'bar', 'foo'], list.to_a
+      end
+
+      it 'returns deleted value' do
+        list.push('foo')
+        assert_equal 'foo', list.delete { |d| d == 'foo' }
+      end
+
+      it 'decreases length of list' do
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete { |d| d == 'foo' }
+        assert_equal 2, list.length
+        assert_equal ['bar', 'foo'], list.to_a
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'deletes value from head' do
+          list.delete { |d| d == 0 }
+          assert_equal [1, 2], list.to_a
+          assert_equal 1, list.first
+        end
+
+        it 'deletes value from middle' do
+          list.delete { |d| d == 1 }
+          assert_equal [0, 2], list.to_a
+        end
+
+
+        it 'deletes value from tail' do
+          list.delete { |d| d == 2 }
+          assert_equal [0, 1], list.to_a
+          assert_equal 1, list.last
+        end
+      end
+    end
+
+    describe 'by data equality' do
+      it 'returns nil if list is empty' do
+        assert_nil list.delete('x')
+      end
+
+      it 'deletes value in first node' do
+        list.push('foo')
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete('foo')
+        assert_equal ['foo', 'bar', 'foo'], list.to_a
+      end
+
+      it 'returns deleted value' do
+        list.push('foo')
+        assert_equal 'foo', list.delete('foo')
+      end
+
+      it 'decreases length of list' do
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete('foo')
+        assert_equal 2, list.length
+        assert_equal ['bar', 'foo'], list.to_a
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(0)
+          list.push(1)
+          list.push(2)
+        end
+
+        it 'deletes value from head' do
+          list.delete(0)
+          assert_equal [1, 2], list.to_a
+          assert_equal 1, list.first
+        end
+
+        it 'deletes value from middle' do
+          list.delete(1)
+          assert_equal [0, 2], list.to_a
+        end
+
+
+        it 'deletes value from tail' do
+          list.delete(2)
+          assert_equal [0, 1], list.to_a
+          assert_equal 1, list.last
+        end
+      end
+    end
+  end
+
+  describe '#delete_all' do
+    it 'raises error if block and value are passed' do
+      err = assert_raises ArgumentError do
+        assert_nil list.delete_all('x') { |d| d == 'x' }
+      end
+      assert_equal err.message, 'either value or block should be passed'
+    end
+
+    describe 'by block' do
+      it 'returns nil if list is empty' do
+        assert_equal list.delete_all { |d| d == 'x' }, []
+      end
+
+      it 'deletes value in first matching node' do
+        list.push('foo')
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete_all { |d| d == 'foo' }
+        assert_equal ['bar'], list.to_a
+      end
+
+      it 'returns deleted value' do
+        list.push('foo')
+        assert_equal ['foo'], list.delete_all { |d| d == 'foo' }
+      end
+
+      it 'decreases length of list' do
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete_all { |d| d == 'foo' }
+        assert_equal 1, list.length
+        assert_equal ['bar'], list.to_a
+      end
+    end
+
+    describe 'by data equality' do
+      it 'returns nil if list is empty' do
+        assert_nil list.delete('x')
+      end
+
+      it 'deletes all matched values' do
+        list.push('foo')
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete_all('foo')
+        assert_equal ['bar'], list.to_a
+      end
+
+      it 'returns deleted value' do
+        list.push('foo')
+        assert_equal ['foo'], list.delete_all('foo')
+      end
+
+      it 'decreases length of list' do
+        list.push('foo')
+        list.push('bar')
+        list.push('foo')
+        list.delete_all('foo')
+        assert_equal 1, list.length
+        assert_equal ['bar'], list.to_a
+      end
+    end
+  end
+
   describe '#shift' do
     it 'returns nil if list is empty' do
       assert_nil list.shift
@@ -197,6 +384,21 @@ describe LinkedList::List do
     it 'returns same object' do
       list.push(node_1)
       assert_equal list, list.reverse!
+    end
+  end
+
+  describe '#each_node' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each_node
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.each_node { |e| nodes << e }
+      assert_equal %w(foo bar), nodes.map(&:data)
+      assert_equal true, nodes.all? { |n| n.is_a?(LinkedList::Node) }
     end
   end
 
