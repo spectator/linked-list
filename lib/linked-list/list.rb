@@ -4,7 +4,7 @@ module LinkedList
   class List
     include Conversions
 
-    attr_accessor :length, :head, :tail
+    attr_reader :length
     alias_method :size, :length
 
     def initialize
@@ -34,7 +34,7 @@ module LinkedList
     # +self+ of +List+ object.
     #
     def push(node)
-      node = Node(node, self)
+      node = Node(node)
       @head ||= node
 
       if @tail
@@ -58,7 +58,7 @@ module LinkedList
     # +self+ of +List+ object.
     #
     def unshift(node)
-      node = Node(node, self)
+      node = Node(node)
       @tail ||= node
 
       node.next = @head
@@ -76,8 +76,8 @@ module LinkedList
     #
     def insert_after(to_add, val = nil, &block)
       found_node = each_node.find(&__to_matcher(val, &block))
-      return if found_node.blank?
-      found_node.insert_after(to_add)
+      return unless found_node
+      insert_after_node(to_add, found_node)
     end
 
     # Inserts before first matched node.data from the the list by passed block or value.
@@ -87,8 +87,8 @@ module LinkedList
     #
     def insert_before(to_add, val = nil, &block)
       found_node = each_node.find(&__to_matcher(val, &block))
-      return if found_node.blank?
-      found_node.insert_before(to_add)
+      return unless found_node
+      insert_before_node(to_add, found_node)
     end
 
     # Removes first matched node.data from the the list by passed block or value.
@@ -98,8 +98,8 @@ module LinkedList
     #
     def delete(val = nil, &block)
       each_node.find(&__to_matcher(val, &block)).tap do |node_to_delete|
-        return if node_to_delete.blank?
-        node_to_delete.unlink
+        return unless node_to_delete
+        unlink_node(node_to_delete)
       end.data
     end
 
@@ -110,8 +110,8 @@ module LinkedList
     #
     def delete_all(val = nil, &block)
       each_node.select(&__to_matcher(val, &block)).each do |node_to_delete|
-        next if node_to_delete.blank?
-        node_to_delete.unlink
+        next unless node_to_delete
+        unlink_node(node_to_delete)
       end.map(&:data)
     end
 
@@ -211,6 +211,47 @@ module LinkedList
     #
     def to_list
       self
+    end
+
+    def insert_after_node(data, node)
+      Node.new(data).tap do |new_node|
+        new_node.prev = node
+        new_node.next = node.next
+        if node.next
+          node.next.prev = new_node
+        else
+          @tail = new_node
+        end
+        node.next = new_node
+        @length += 1
+      end.data
+    end
+
+    def insert_before_node(data, node)
+      Node.new(data).tap do |new_node|
+        new_node.next = node
+        new_node.prev = node.prev
+        if node.prev
+          node.prev.next = new_node
+        else
+          @head = new_node
+        end
+        node.prev = new_node
+        @length += 1
+      end.data
+    end
+
+    def unlink_node(node)
+      if node.prev.nil?
+        node.next.prev = nil if node.next
+        @head = node.next
+      elsif node.next.nil?
+        node.prev.next = nil if node.prev
+        @tail = node.prev
+      else
+        node.prev.next, node.next.prev = node.next, node.prev
+      end
+      @length -= 1
     end
 
     private
