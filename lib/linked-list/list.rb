@@ -77,7 +77,7 @@ module LinkedList
     def insert_after(to_add, val = nil, &block)
       found_node = each_node.find(&__to_matcher(val, &block))
       return unless found_node
-      insert_after_node(to_add, found_node)
+      insert_after_node(to_add, found_node).data
     end
 
     # Inserts before first matched node.data from the the list by passed block or value.
@@ -88,7 +88,7 @@ module LinkedList
     def insert_before(to_add, val = nil, &block)
       found_node = each_node.find(&__to_matcher(val, &block))
       return unless found_node
-      insert_before_node(to_add, found_node)
+      insert_before_node(to_add, found_node).data
     end
 
     # Removes first matched node.data from the the list by passed block or value.
@@ -224,7 +224,7 @@ module LinkedList
         end
         node.next = new_node
         @length += 1
-      end.data
+      end
     end
 
     def insert_before_node(data, node)
@@ -238,7 +238,7 @@ module LinkedList
         end
         node.prev = new_node
         @length += 1
-      end.data
+      end
     end
 
     def unlink_node(node)
