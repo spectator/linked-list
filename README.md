@@ -44,6 +44,9 @@ list.shift
 list.reverse
 list.reverse!
 
+list.delete(object)
+list.delete_all(object)
+
 list.each      # Enumerator object
 list.each { |e| puts e }
 
@@ -78,7 +81,7 @@ Please see `LinkedList::List`, `LinkedList::Node`, and
 
 ## TODO
 
-* Insert / delete in the middle
+* Insert in the middle
 
 ## Tests
 
