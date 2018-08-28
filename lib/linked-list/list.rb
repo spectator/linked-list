@@ -98,7 +98,7 @@ module LinkedList
     def delete(val = nil, &block)
       each_node.find(&__to_matcher(val, &block)).tap do |node_to_delete|
         return unless node_to_delete
-        unlink_node(node_to_delete)
+        __unlink_node(node_to_delete)
       end.data
     end
 
@@ -110,7 +110,7 @@ module LinkedList
     def delete_all(val = nil, &block)
       each_node.select(&__to_matcher(val, &block)).each do |node_to_delete|
         next unless node_to_delete
-        unlink_node(node_to_delete)
+        __unlink_node(node_to_delete)
       end.map(&:data)
     end
 
@@ -240,7 +240,9 @@ module LinkedList
       end
     end
 
-    def unlink_node(node)
+    private
+
+    def __unlink_node(node)
       if node.prev.nil?
         node.next.prev = nil if node.next
         @head = node.next
@@ -253,7 +255,6 @@ module LinkedList
       @length -= 1
     end
 
-    private
 
     def __to_matcher(val = nil, &block)
       raise ArgumentError, 'either value or block should be passed' if val && block_given?
