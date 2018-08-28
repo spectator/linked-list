@@ -69,26 +69,25 @@ module LinkedList
       self
     end
 
-    # Inserts after first matched node.data from the the list by passed block or value.
+    # Inserts after or before first matched node.data from the the list by passed block or value.
     #
     # == Returns:
     # Inserted node
     #
-    def insert_after(to_add, val = nil, &block)
-      found_node = each_node.find(&__to_matcher(val, &block))
-      return unless found_node
-      insert_after_node(to_add, found_node).data
-    end
-
-    # Inserts before first matched node.data from the the list by passed block or value.
-    #
-    # == Returns:
-    # Inserted node
-    #
-    def insert_before(to_add, val = nil, &block)
-      found_node = each_node.find(&__to_matcher(val, &block))
-      return unless found_node
-      insert_before_node(to_add, found_node).data
+    def insert(to_add, after: nil, before: nil)
+      if after && before || !after && !before
+        raise ArgumentError, 'either :after or :before keys should be passed'
+      end
+      matcher = after || before
+      matcher_proc = if matcher.is_a?(Proc)
+                       __to_matcher(&matcher)
+                     else
+                       __to_matcher(matcher)
+                     end
+      node = each_node.find(&matcher_proc)
+      return unless node
+      new_node = after ? insert_after_node(to_add, node) : insert_before_node(to_add, node)
+      new_node.data
     end
 
     # Removes first matched node.data from the the list by passed block or value.
@@ -214,7 +213,7 @@ module LinkedList
     end
 
     def insert_after_node(data, node)
-      Node.new(data).tap do |new_node|
+      Node(data).tap do |new_node|
         new_node.prev = node
         new_node.next = node.next
         if node.next
@@ -228,7 +227,7 @@ module LinkedList
     end
 
     def insert_before_node(data, node)
-      Node.new(data).tap do |new_node|
+      Node(data).tap do |new_node|
         new_node.next = node
         new_node.prev = node.prev
         if node.prev
@@ -259,7 +258,7 @@ module LinkedList
     def __to_matcher(val = nil, &block)
       raise ArgumentError, 'either value or block should be passed' if val && block_given?
       block = ->(e) { e == val } unless block_given?
-      -> (node) { block.call(node.data) }
+      ->(node) { block.call(node.data) }
     end
 
     def __shift
