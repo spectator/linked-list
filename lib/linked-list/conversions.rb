@@ -11,11 +11,11 @@ module LinkedList
     # == Returns:
     # New +Node+ object.
     #
-    def Node(arg, list = nil)
+    def Node(arg)
       if arg.respond_to?(:to_node)
         arg.to_node
       else
-        Node.new(arg, list)
+        Node.new(arg)
       end
     end
 
@@ -33,9 +33,9 @@ module LinkedList
       if arg.respond_to?(:to_list)
         arg.to_list
       elsif arg.respond_to?(:to_ary)
-        arg.to_ary.each_with_object(List.new) { |n, l| l.push(Node(n, l)) }
+        arg.to_ary.each_with_object(List.new) { |n, l| l.push(Node(n)) }
       else
-        List.new.tap { |l| l.push(Node(arg, l)) }
+        List.new.push(Node(arg))
       end
     end
   end
