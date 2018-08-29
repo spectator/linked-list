@@ -134,6 +134,165 @@ describe LinkedList::List do
     end
   end
 
+  describe '#insert' do
+    it 'raises error if after and before are passed' do
+      err = assert_raises ArgumentError do
+        assert_nil list.insert(1, after: 'x', before: 'y')
+      end
+      assert_equal err.message, 'either :after or :before keys should be passed'
+    end
+
+    it 'raises error if no after nore before are passed' do
+      err = assert_raises ArgumentError do
+        assert_nil list.insert(1)
+      end
+      assert_equal err.message, 'either :after or :before keys should be passed'
+    end
+
+    describe 'after:' do
+      describe 'by block' do
+        it 'does not add value if insert after not found' do
+          list.push('foo')
+          assert_nil list.insert(1, after: ->(d) { d == 'foo1' })
+          assert_equal ['foo'], list.to_a
+        end
+
+        it 'inserts value after first matching node by block' do
+          list.push('foo')
+          list.push('bar')
+          assert_equal 1, list.insert(1, after: ->(d) { d == 'foo' })
+          assert_equal ['foo', 1, 'bar'], list.to_a
+          assert_equal 3, list.length
+        end
+
+        describe 'position edge cases' do
+          before do
+            list.push(0)
+            list.push(1)
+            list.push(2)
+          end
+
+          it 'inserts after in the middle' do
+            list.insert('foo', after: ->(d) { d == 0 })
+            assert_equal [0, 'foo', 1, 2], list.to_a
+          end
+
+          it 'inserts after the tail' do
+            list.insert('foo', after: ->(d) { d == 2 })
+            assert_equal [0, 1, 2, 'foo'], list.to_a
+            assert_equal 'foo', list.last
+          end
+        end
+      end
+
+      describe 'by value' do
+        it 'does not add value if insert after not found' do
+          list.push('foo')
+          assert_nil list.insert(1, after: 'foo1')
+          assert_equal ['foo'], list.to_a
+        end
+
+        it 'inserts value after first matching node by block' do
+          list.push('foo')
+          list.push('bar')
+          assert_equal 1, list.insert(1, after: 'foo')
+          assert_equal ['foo', 1, 'bar'], list.to_a
+          assert_equal 3, list.length
+        end
+
+        describe 'position edge cases' do
+          before do
+            list.push(0)
+            list.push(1)
+            list.push(2)
+          end
+
+          it 'inserts after in the middle' do
+            list.insert('foo', after: 0)
+            assert_equal [0, 'foo', 1, 2], list.to_a
+          end
+
+          it 'inserts after the tail' do
+            list.insert('foo', after: 2)
+            assert_equal [0, 1, 2, 'foo'], list.to_a
+            assert_equal 'foo', list.last
+          end
+        end
+      end
+    end
+
+    describe ':before' do
+      describe 'by block' do
+        it 'does not add value if insert before not found' do
+          list.push('foo')
+          assert_nil list.insert(1, before: ->(d) { d == 'foo1' })
+          assert_equal ['foo'], list.to_a
+        end
+
+        it 'inserts value before first matching node by block' do
+          list.push('foo')
+          list.push('bar')
+          assert_equal 1, list.insert(1, before: ->(d) { d == 'foo' })
+          assert_equal [1, 'foo', 'bar'], list.to_a
+          assert_equal 3, list.length
+        end
+
+        describe 'position edge cases' do
+          before do
+            list.push(0)
+            list.push(1)
+            list.push(2)
+          end
+
+          it 'inserts before head' do
+            list.insert('foo', before: ->(d) { d == 0 })
+            assert_equal ['foo', 0, 1, 2], list.to_a
+            assert_equal 'foo', list.first
+          end
+
+          it 'inserts before in the middle' do
+            list.insert('foo', before: ->(d) { d == 2 })
+            assert_equal [0, 1, 'foo', 2], list.to_a
+          end
+        end
+      end
+
+      describe 'by value' do
+        it 'does not add value if insert before not found' do
+          list.push('foo')
+          assert_nil list.insert(1, before: 'foo1')
+          assert_equal ['foo'], list.to_a
+        end
+
+        it 'inserts value before first' do
+          list.push('foo')
+          list.push('bar')
+          assert_equal 1, list.insert(1, before: 'foo')
+          assert_equal [1, 'foo', 'bar'], list.to_a
+          assert_equal 3, list.length
+        end
+
+        describe 'position edge cases' do
+          before do
+            list.push(0)
+            list.push(1)
+            list.push(2)
+          end
+
+          it 'inserts before head' do
+            list.insert('foo', before: 0)
+            assert_equal ['foo', 0, 1, 2], list.to_a
+            assert_equal 'foo', list.first
+          end
+
+          it 'inserts before in the middle' do
+            list.insert('foo', before: 2)
+            assert_equal [0, 1, 'foo', 2], list.to_a
+          end
+        end
+      end
+    end
+  end
 
   describe '#delete' do
     it 'raises error if block and value are passed' do
@@ -149,12 +308,14 @@ describe LinkedList::List do
       end
 
       it 'deletes value in first matching node' do
+        calls_count = 0
         list.push('foo')
         list.push('foo')
         list.push('bar')
         list.push('foo')
-        list.delete { |d| d == 'foo' }
-        assert_equal ['foo', 'bar', 'foo'], list.to_a
+        list.delete { |d| calls_count += 1;d == 'bar' }
+        assert_equal ['foo', 'foo', 'foo'], list.to_a
+        assert_equal 3, calls_count
       end
 
       it 'returns deleted value' do
@@ -188,7 +349,6 @@ describe LinkedList::List do
           list.delete { |d| d == 1 }
           assert_equal [0, 2], list.to_a
         end
-
 
         it 'deletes value from tail' do
           list.delete { |d| d == 2 }
