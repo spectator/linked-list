@@ -41,11 +41,23 @@ list.unshift(object)
 list.pop
 list.shift
 
+list.insert(object, before: object)
+list.insert(object, before: ->(n) { n == 'foo' })
+
+list.insert(object, after: object)
+list.insert(object, after: ->(n) { n == 'foo' })
+
+list.insert_before(object, node)
+list.insert_after(object, node)
+
 list.reverse
 list.reverse!
 
 list.delete(object)
+list.delete { |n| n == 'foo' }
+
 list.delete_all(object)
+list.delete_all { |n| n == 'foo' }
 
 list.each      # Enumerator object
 list.each { |e| puts e }
@@ -78,10 +90,6 @@ List([object, object]) # will return new `List` object with two `Node` objects
 
 Please see `LinkedList::List`, `LinkedList::Node`, and
 `LinkedList::Conversions` for details.
-
-## TODO
-
-* Insert in the middle
 
 ## Tests
 

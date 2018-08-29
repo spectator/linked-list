@@ -1,3 +1,11 @@
+# 0.0.12 / Unreleased
+
+## Added
+
+- Added `insert`, `insert_before` and `insert_after` methods (mpospelov in [#3](https://github.com/spectator/linked-list/pull/3))
+
+[Compare v0.0.11...v0.0.12](https://github.com/spectator/linked-list/compare/v0.0.11...v0.0.12)
+
 # 0.0.11 / 2018-04-02
 
 ## Added
