@@ -72,7 +72,7 @@ module LinkedList
     # Inserts after or before first matched node.data from the the list by passed block or value.
     #
     # == Returns:
-    # Inserted node
+    # Inserted node data
     #
     def insert(to_add, after: nil, before: nil)
       if after && before || !after && !before
@@ -193,7 +193,7 @@ module LinkedList
     end
 
 
-        # Iterates over nodes from top to bottom passing node data to the block if
+    # Iterates over nodes from bottom to top passing node data to the block if
     # given. If no block given, returns +Enumerator+.
     #
     # == Returns:
@@ -205,6 +205,12 @@ module LinkedList
       __reverse_each { |node| yield(node.data) }
     end
 
+    # Iterates over nodes from bottom to top passing node(LinkedList::Node instance)
+    # to the block if given. If no block given, returns +Enumerator+.
+    #
+    # == Returns:
+    # +Enumerator+ or yields list nodes to the block
+    #
     def reverse_each_node
       return to_enum(__callee__) unless block_given?
       __reverse_each { |node| yield(node) }
@@ -230,6 +236,11 @@ module LinkedList
       self
     end
 
+    # Inserts data after passed node.
+    #
+    # == Returns:
+    # Inserted node
+    #
     def insert_after_node(data, node)
       Node(data).tap do |new_node|
         new_node.prev = node
@@ -244,6 +255,12 @@ module LinkedList
       end
     end
 
+
+    # Inserts data before passed node.
+    #
+    # == Returns:
+    # Inserted node
+    #
     def insert_before_node(data, node)
       Node(data).tap do |new_node|
         new_node.next = node
