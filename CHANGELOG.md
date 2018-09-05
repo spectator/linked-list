@@ -1,12 +1,13 @@
-# 0.0.12 / Unreleased
+# 0.0.12 / 2018-09-04
 
 ## Added
 
 - Added `insert`, `insert_before` and `insert_after` methods (mpospelov in [#3](https://github.com/spectator/linked-list/pull/3))
+- Added `reverse_each` and `reverse_each_node` methods (mpospelov in [#4](https://github.com/spectator/linked-list/pull/4))
 
 [Compare v0.0.11...v0.0.12](https://github.com/spectator/linked-list/compare/v0.0.11...v0.0.12)
 
-# 0.0.11 / 2018-04-02
+# 0.0.11 / 2018-08-23
 
 ## Added
 
