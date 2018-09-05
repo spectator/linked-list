@@ -294,6 +294,70 @@ describe LinkedList::List do
     end
   end
 
+  describe '#insert_after_node' do
+    it 'inserts value after passed node' do
+      list.push('foo')
+      list.push('bar')
+      node = list.each_node.find { |n| n.data == 'foo' }
+      assert_equal 1, list.insert_after_node(1, node).data
+      assert_equal ['foo', 1, 'bar'], list.to_a
+      assert_equal 3, list.length
+    end
+
+    describe 'position edge cases' do
+      before do
+        list.push(0)
+        list.push(1)
+        list.push(2)
+      end
+
+      it 'inserts after in the middle' do
+        node = list.each_node.find { |n| n.data == 0 }
+        list.insert_after_node('foo', node)
+        assert_equal [0, 'foo', 1, 2], list.to_a
+      end
+
+      it 'inserts after the tail' do
+        node = list.each_node.find { |n| n.data == 2 }
+        list.insert_after_node('foo', node)
+        assert_equal [0, 1, 2, 'foo'], list.to_a
+        assert_equal 'foo', list.last
+      end
+    end
+  end
+
+  describe '#insert_after_node' do
+    it 'inserts value before first' do
+      list.push('foo')
+      list.push('bar')
+      node = list.each_node.find { |n| n.data == 'foo' }
+      assert_equal 1, list.insert_before_node(1, node).data
+      assert_equal [1, 'foo', 'bar'], list.to_a
+      assert_equal 3, list.length
+    end
+
+    describe 'position edge cases' do
+      before do
+        list.push(0)
+        list.push(1)
+        list.push(2)
+      end
+
+      it 'inserts before head' do
+        node = list.each_node.find { |n| n.data == 0 }
+        list.insert_before_node('foo', node)
+        assert_equal ['foo', 0, 1, 2], list.to_a
+        assert_equal 'foo', list.first
+      end
+
+      it 'inserts before in the middle' do
+        node = list.each_node.find { |n| n.data == 2 }
+        list.insert_before_node('foo', node)
+        assert_equal [0, 1, 'foo', 2], list.to_a
+      end
+    end
+  end
+
   describe '#delete' do
     it 'raises error if block and value are passed' do
       err = assert_raises ArgumentError do
@@ -573,6 +637,48 @@ describe LinkedList::List do
       nodes = []
       list.each { |e| nodes << e }
       assert_equal %w(foo bar), nodes
+    end
+  end
+
+  describe '#each_node' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.each_node { |e| nodes << e }
+      assert_equal %w(foo bar), nodes.map(&:data)
+    end
+  end
+
+  describe '#reverse_each' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.reverse_each { |e| nodes << e }
+      assert_equal %w(bar foo), nodes
+    end
+  end
+
+  describe '#reverse_each_node' do
+    it 'returns enumerator if no block given' do
+      assert_instance_of Enumerator, list.each
+    end
+
+    it 'pass each node data to the block' do
+      list.push(node_1)
+      list.push(node_2)
+      nodes = []
+      list.reverse_each_node { |e| nodes << e }
+      assert_equal %w(bar foo), nodes.map(&:data)
     end
   end
 

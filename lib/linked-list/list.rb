@@ -72,7 +72,7 @@ module LinkedList
     # Inserts after or before first matched node.data from the the list by passed block or value.
     #
     # == Returns:
-    # Inserted node
+    # Inserted node data
     #
     def insert(to_add, after: nil, before: nil)
       if after && before || !after && !before
@@ -230,6 +230,30 @@ module LinkedList
       __each { |node| yield(node) }
     end
 
+
+    # Iterates over nodes from bottom to top passing node data to the block if
+    # given. If no block given, returns +Enumerator+.
+    #
+    # == Returns:
+    # +Enumerator+ or yields data to the block stored in every node on the
+    # list.
+    #
+    def reverse_each
+      return to_enum(__callee__) unless block_given?
+      __reverse_each { |node| yield(node.data) }
+    end
+
+    # Iterates over nodes from bottom to top passing node(LinkedList::Node instance)
+    # to the block if given. If no block given, returns +Enumerator+.
+    #
+    # == Returns:
+    # +Enumerator+ or yields list nodes to the block
+    #
+    def reverse_each_node
+      return to_enum(__callee__) unless block_given?
+      __reverse_each { |node| yield(node) }
+    end
+
     # Converts list to array.
     #
     def to_a
@@ -248,6 +272,45 @@ module LinkedList
     #
     def to_list
       self
+    end
+
+    # Inserts data after passed node.
+    #
+    # == Returns:
+    # Inserted node
+    #
+    def insert_after_node(data, node)
+      Node(data).tap do |new_node|
+        new_node.prev = node
+        new_node.next = node.next
+        if node.next
+          node.next.prev = new_node
+        else
+          @tail = new_node
+        end
+        node.next = new_node
+        @length += 1
+      end
+    end
+
+
+    # Inserts data before passed node.
+    #
+    # == Returns:
+    # Inserted node
+    #
+    def insert_before_node(data, node)
+      Node(data).tap do |new_node|
+        new_node.next = node
+        new_node.prev = node.prev
+        if node.prev
+          node.prev.next = new_node
+        else
+          @head = new_node
+        end
+        node.prev = new_node
+        @length += 1
+      end
     end
 
     private
@@ -284,6 +347,14 @@ module LinkedList
       @tail = @tail.prev
       @tail.next = nil if @tail
       tail
+    end
+
+    def __reverse_each
+      curr_node = @tail
+      while(curr_node)
+        yield curr_node
+        curr_node = curr_node.prev
+      end
     end
 
     def __each
