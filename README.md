@@ -59,14 +59,20 @@ list.delete { |n| n == 'foo' }
 list.delete_all(object)
 list.delete_all { |n| n == 'foo' }
 
-list.each      # Enumerator object
+list.each  # Enumerator object
 list.each { |e| puts e }
 
-list.first     # head of the list
-list.last      # tail of the list
+list.reverse_each # Enumerator object
+list.reverse_each { |e| puts e }
+
+list.reverse_each_node # Enumerator object
+list.reverse_each_node { |node| puts node.data }
+
+list.first # head of the list
+list.last # tail of the list
 
 list.length
-list.size      # same as `length`
+list.size # same as `length`
 
 list.to_a
 ```
