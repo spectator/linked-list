@@ -4,6 +4,7 @@ describe LinkedList::List do
   let(:list)   { create_list }
   let(:node_1) { create_node('foo') }
   let(:node_2) { create_node('bar') }
+  let(:node_3) { create_node('baz') }
 
   describe 'instantiation' do
     it 'assigns first to nil' do
@@ -473,6 +474,56 @@ describe LinkedList::List do
           list.delete(2)
           assert_equal [0, 1], list.to_a
           assert_equal 1, list.last
+        end
+      end
+    end
+
+    describe 'by node' do
+      it 'deletes first node' do
+        list.push(node_1)
+        list.push(node_2)
+        list.push(node_3)
+        list.delete(node_1)
+        assert_equal ['bar', 'baz'], list.to_a
+      end
+
+      it 'returns deleted value' do
+        list.push(node_1)
+        list.delete(node_1)
+        assert_equal node_1.data, list.delete(node_1)
+      end
+
+      it 'decreases length of list' do
+        list.push('foo')
+        list.push('bar')
+        list.push('baz')
+        list.delete('foo')
+        assert_equal 2, list.length
+      end
+
+      describe 'position edge cases' do
+        before do
+          list.push(node_1)
+          list.push(node_2)
+          list.push(node_3)
+        end
+
+        it 'deletes value from head' do
+          list.delete(node_1)
+          assert_equal ['bar', 'baz'], list.to_a
+          assert_equal 'bar', list.first
+        end
+
+        it 'deletes value from middle' do
+          list.delete(node_2)
+          assert_equal ['foo', 'baz'], list.to_a
+        end
+
+
+        it 'deletes value from tail' do
+          list.delete(node_3)
+          assert_equal ['foo', 'bar'], list.to_a
+          assert_equal 'bar', list.last
         end
       end
     end
