@@ -1,3 +1,15 @@
+# 0.0.13 / 2018-11-27
+
+## Fixed
+
+- Delete duplicate method definitions (nex3 in [#7](https://github.com/spectator/linked-list/pull/7))
+
+## Added
+
+- Allow `List#delete` to delete a `Node` in O(1) time (nex3 in [#6](https://github.com/spectator/linked-list/pull/6))
+
+[Compare v0.0.12...v0.0.13](https://github.com/spectator/linked-list/compare/v0.0.12...v0.0.13)
+
 # 0.0.12 / 2018-09-04
 
 ## Added
