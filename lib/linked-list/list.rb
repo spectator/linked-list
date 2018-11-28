@@ -274,45 +274,6 @@ module LinkedList
       self
     end
 
-    # Inserts data after passed node.
-    #
-    # == Returns:
-    # Inserted node
-    #
-    def insert_after_node(data, node)
-      Node(data).tap do |new_node|
-        new_node.prev = node
-        new_node.next = node.next
-        if node.next
-          node.next.prev = new_node
-        else
-          @tail = new_node
-        end
-        node.next = new_node
-        @length += 1
-      end
-    end
-
-
-    # Inserts data before passed node.
-    #
-    # == Returns:
-    # Inserted node
-    #
-    def insert_before_node(data, node)
-      Node(data).tap do |new_node|
-        new_node.next = node
-        new_node.prev = node.prev
-        if node.prev
-          node.prev.next = new_node
-        else
-          @head = new_node
-        end
-        node.prev = new_node
-        @length += 1
-      end
-    end
-
     private
 
     def __unlink_node(node)
