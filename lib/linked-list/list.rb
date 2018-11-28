@@ -130,10 +130,19 @@ module LinkedList
 
     # Removes first matched node.data from the the list by passed block or value.
     #
+    # If +val+ is a +Node+, removes that node from the list. Behavior is
+    # undefined if +val+ is a +Node+ that's not a member of this list.
+    #
     # == Returns:
-    # Deleted node
+    # Deleted node's data
     #
     def delete(val = nil, &block)
+      if val.respond_to?(:to_node)
+        node = val.to_node
+        __unlink_node(node)
+        return node.data
+      end
+
       each_node.find(&__to_matcher(val, &block)).tap do |node_to_delete|
         return unless node_to_delete
         __unlink_node(node_to_delete)
