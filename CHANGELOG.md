@@ -1,3 +1,11 @@
+# 0.0.14 / 2020-04-17
+
+## Fixed
+
+Forced minimal rake version in gemspec to skip rake versions with security issues.
+
+[Compare v0.0.13...v0.0.14](https://github.com/spectator/linked-list/compare/v0.0.13...v0.0.14)
+
 # 0.0.13 / 2018-11-27
 
 ## Fixed
