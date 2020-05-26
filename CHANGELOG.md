@@ -1,3 +1,9 @@
+# 0.0.x / 2020-05-26
+
+## Fixed
+
+- Fixed bug when deleting the last node of the list. The @tail value was not updated if the @head value was updated.
+
 # 0.0.14 / 2020-04-17
 
 ## Fixed

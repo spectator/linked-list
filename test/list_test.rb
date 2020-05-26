@@ -510,20 +510,39 @@ describe LinkedList::List do
 
         it 'deletes value from head' do
           list.delete(node_1)
-          assert_equal ['bar', 'baz'], list.to_a
-          assert_equal 'bar', list.first
+          assert_equal [node_2.data, node_3.data], list.to_a
+          assert_equal node_2.data, list.first
+          assert_equal node_3.data, list.last
         end
 
         it 'deletes value from middle' do
           list.delete(node_2)
-          assert_equal ['foo', 'baz'], list.to_a
+          assert_equal [node_1.data, node_3.data], list.to_a
+          assert_equal node_1.data, list.first
+          assert_equal node_3.data, list.last
         end
 
 
         it 'deletes value from tail' do
           list.delete(node_3)
-          assert_equal ['foo', 'bar'], list.to_a
-          assert_equal 'bar', list.last
+          assert_equal [node_1.data, node_2.data], list.to_a
+          assert_equal node_1.data, list.first
+          assert_equal node_2.data, list.last
+        end
+      end
+
+      describe 'delete edge cases' do
+        it 'resets original list state when deleting the last node of the list' do
+          assert_nil list.first
+          assert_nil list.last
+
+          list.push(node_1)
+          assert_equal node_1.data, list.first
+          assert_equal node_1.data, list.last
+
+          list.delete(node_1)
+          assert_nil list.first
+          assert_nil list.last
         end
       end
     end
