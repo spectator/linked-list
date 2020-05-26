@@ -1,8 +1,13 @@
-# 0.0.x / 2020-05-26
+# 0.0.x / Unreleased
+
+
+# 0.0.15 / 2020-05-26
 
 ## Fixed
 
 - Fixed bug when deleting the last node of the list. The @tail value was not updated if the @head value was updated.
+
+[Compare v0.0.14...v0.0.15](https://github.com/spectator/linked-list/compare/v0.0.14...v0.0.15)
 
 # 0.0.14 / 2020-04-17
 
