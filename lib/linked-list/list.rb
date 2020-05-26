@@ -286,18 +286,18 @@ module LinkedList
     private
 
     def __unlink_node(node)
+      @head = node.next if node.prev.nil?
+      @tail = node.prev if node.next.nil?
+
       if node.prev.nil?
         node.next.prev = nil if node.next
-        @head = node.next
       elsif node.next.nil?
         node.prev.next = nil if node.prev
-        @tail = node.prev
       else
         node.prev.next, node.next.prev = node.next, node.prev
       end
       @length -= 1
     end
-
 
     def __to_matcher(val = nil, &block)
       raise ArgumentError, 'either value or block should be passed' if val && block_given?
