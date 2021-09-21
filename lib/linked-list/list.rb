@@ -308,7 +308,7 @@ module LinkedList
     def __shift
       head = @head
       @head = @head.next
-      head.next = nil
+      @head.prev = nil if @head
       head
     end
 
