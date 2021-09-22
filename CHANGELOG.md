@@ -1,5 +1,12 @@
 # 0.0.x / Unreleased
 
+# 0.0.16 / 2021-09-21
+
+## Fixed
+
+- Fixed bug when reference to prev node was not set correctly аfter using `shift`.
+
+[Compare v0.0.15...v0.0.16](https://github.com/spectator/linked-list/compare/v0.0.15...v0.0.16)
 
 # 0.0.15 / 2020-05-26
 
