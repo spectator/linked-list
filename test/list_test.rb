@@ -638,6 +638,16 @@ describe LinkedList::List do
       assert_nil list.first
     end
 
+    it 'sets reference to the prev node' do
+      list.push(node_1)
+      list.push(node_2)
+      assert_nil node_1.prev
+      assert_equal node_2.prev, node_1
+
+      list.shift
+      assert_nil node_2.prev
+    end
+
     it 'reduces list length by 1' do
       list.push(node_1)
       list.shift
@@ -750,25 +760,6 @@ describe LinkedList::List do
       list.reverse_each_node { |e| nodes << e }
       assert_equal %w(bar foo), nodes.map(&:data)
     end
-    
-    it 'raises error if node is not found after 1)push nodes, 2)shift list, and 3)insert_before_node' do
-      list.push(node_1)
-      list.push(node_2)
-      list.shift
-
-      first_node = nil
-      list.reverse_each_node do |e|
-        first_node = e unless e.nil?
-      end
-      list.insert_before_node(node_3, first_node)
-
-      nodes = []
-      nodes_r = []
-      list.each_node { |e| nodes << e }
-      list.reverse_each_node { |e| nodes_r.unshift e }
-
-      assert_equal nodes.map(&:data), nodes_r.map(&:data)
-    end    
   end
 
   describe '#inspect' do
